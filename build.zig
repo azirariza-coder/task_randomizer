@@ -18,8 +18,16 @@ pub fn build(b: *std.Build) !void {
         .optimize = optimize,
     });
 
-    exe.addCSourceFiles(.{ .files = &.{"src/main.c"} });
-    exeWindows.addCSourceFiles(.{ .files = &.{"src/main.c"} });
+    const c_flags = [_][]const u8{
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-std=c99",
+        "-pedantic",
+    };
+
+    exe.addCSourceFiles(.{ .files = &.{"src/main.c"}, .flags = &c_flags });
+    exeWindows.addCSourceFiles(.{ .files = &.{"src/main.c"}, .flags = &c_flags });
 
     exe.linkLibC();
     exeWindows.linkLibC();
