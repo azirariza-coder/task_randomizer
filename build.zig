@@ -1,8 +1,8 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) !void {
-    const target = b.resolveTargetQuery(.{ .os_tag = .linux });
-    const targetWindows = b.resolveTargetQuery(.{ .os_tag = .windows });
+    const target = b.resolveTargetQuery(.{ .os_tag = .linux, .cpu_arch = .x86_64 });
+    const targetWindows = b.resolveTargetQuery(.{ .os_tag = .windows, .cpu_arch = .x86_64 });
 
     const optimize = b.standardOptimizeOption(.{});
 
