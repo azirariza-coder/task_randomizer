@@ -1,18 +1,19 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <time.h>
+
 
 void fRead(FILE *);
 
 int main(void) {
-  // TO DO :
-  // iterate over tasks and then write it to file
 
   (void)printf("Is the file exist yet?, create file if not\n");
 
   FILE *pFile;
   char *fileName = "./task/task_example.txt";
   char *openMode = "r";
-  const char *tasks[2] = {"Olahraga\n", "Programming\n"};
+  const char *tasks[3] = {"Olahraga\n", "Programming\n","Gaming\n"};
 
   pFile = fopen(fileName, openMode);
 
@@ -33,8 +34,8 @@ int main(void) {
   int c = fgetc(pFile);
 
   if (c != EOF) {
-    (void)printf("File not Empty\n");
     (void)ungetc(c, pFile);
+    (void)printf("File not Empty\n");
     (void)fRead(pFile);
     (void)printf("Closing file...\n");
     int closeStatus = fclose(pFile);
@@ -75,16 +76,19 @@ int main(void) {
     openMode = "r";
     pFile = freopen(fileName, openMode, pFile);
     if (pFile == NULL) {
-      (void)printf("Write Failed\n");
+      (void)printf("Read Failed\n");
       return 5;
     }
   }
+
+  (void)printf("Read Success\n");
   (void)fRead(pFile);
+  
 
   (void)printf("Closing file...\n");
   int closeStatus = fclose(pFile);
   if (closeStatus == EOF) {
-    (void)printf("Read failed!\n");
+    (void)printf("Close failed!\n");
     return 6;
   }
 
@@ -93,7 +97,7 @@ int main(void) {
 
 void fRead(FILE *pFile) {
 
-  char buffer[2][20];
+  char buffer[3][20];
   int c = 0;
   size_t j = 0;
 
@@ -109,4 +113,12 @@ void fRead(FILE *pFile) {
   for (size_t i = 0; i < sizeof(buffer)/ sizeof(buffer[0]); i++) {
   (void)printf("%s\n", buffer[i]);
   }
+
+
+  time_t  result = time(NULL);
+  (void) srand(result);
+  (void)printf("Hasil randomize : %s\n",buffer[rand()% 3]);
+
 }
+
+
